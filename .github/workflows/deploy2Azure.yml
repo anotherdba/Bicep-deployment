@@ -35,7 +35,7 @@ jobs:
            creds: ${{ secrets.AZURE_CREDENTIALS }}
            enable-AzPSSession: true
            
-      - name: Azure PowerShell Action
+      - name: Create the resourceGroup
         uses: Azure/powershell@v2
         with:
     # Specify the Az PowerShell script here.
