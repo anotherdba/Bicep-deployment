@@ -32,7 +32,7 @@ jobs:
            creds: ${{ secrets.AZURE_CREDENTIALS }}
 
     # Set this value to true to enable Azure PowerShell Login in addition to Azure CLI login
-            enable-AzPSSession: true
+           enable-AzPSSession: true
       - name: Azure PowerShell Action
         uses: Azure/powershell@v2
         with:
