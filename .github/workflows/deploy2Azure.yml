@@ -35,14 +35,7 @@ jobs:
            creds: ${{ secrets.AZURE_CREDENTIALS }}
            # set this value to true to enable PowerShell login in addition to az CLI lo
            enable-AzPSSession: true
-      - name: build the bicep file into arm
-        uses: Azure/cli@v2.1.0
-        with:
-          # Specify the script here
-          inlineScript: az bicep build --file main.bicep  --outfile ./main.json
-    # Azure CLI version to be used to execute the script. If not provided, latest version is used
-         
-              
+                    
       - name: Create the resourceGroup
         uses: Azure/powershell@v2
         with:
@@ -50,6 +43,16 @@ jobs:
           inlineScript:  new-azResourceGroup -Name ${{ env.resourceGroupName }} -location eastus -Force
     # Azure PS version to be used to execute the script, example: 1.8.0, 2.8.0, 3.4.0. To use the latest version, specify "latest".
           azPSVersion: latest
+
+      - name: Peform What-if test
+        uses: Azure/powershell@v2
+        with:
+    # Specify the Az PowerShell script here.
+          inlineScript: new-AzResourceGroupDeployment -ResourceGroupName ${{ env.resourceGroupName }} -TemplateFile main.bicep -WhatIf
+    # Azure PS version to be used to execute the script, example: 1.8.0, 2.8.0, 3.4.0. To use the latest version, specify "latest".
+          azPSVersion: latest
+
+                   
       - name: Deploy Azure Resource Manager (ARM) Template
         uses: Azure/arm-deploy@v2
         with:
